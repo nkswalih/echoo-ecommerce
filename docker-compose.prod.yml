@@ -32,8 +32,8 @@ services:
       DB_SSLMODE: ""
       SECURE_SSL_REDIRECT: "0"
       SECURE_HSTS_SECONDS: "0"
-      SESSION_COOKIE_SECURE: "0"
-      CSRF_COOKIE_SECURE: "0"
+      # SESSION_COOKIE_SECURE: "0"
+      # CSRF_COOKIE_SECURE: "0"
       DJANGO_BOOTSTRAP_DATA: "1"
     expose:
       - "8000"

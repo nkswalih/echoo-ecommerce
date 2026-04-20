@@ -193,6 +193,7 @@ SIMPLE_JWT = {
 SESSION_COOKIE_SECURE = config("SESSION_COOKIE_SECURE", default=False, cast=bool)
 SESSION_COOKIE_SAMESITE = "Lax"
 SESSION_COOKIE_HTTPONLY = True  # Only applies to Django's own session cookie
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # ─── Internationalisation ─────────────────────────────────────────────────────
 
