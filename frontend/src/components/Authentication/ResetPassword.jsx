@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import { resetPassword } from "../../api/apiService";
 import { toast } from "react-toastify";
+import AuthFooter from "../../components/ui/AuthFooter";
 
 export default function ResetPassword() {
   const [params] = useSearchParams();
@@ -41,16 +42,25 @@ export default function ResetPassword() {
       <div className="bg-white w-full max-w-5xl flex flex-col md:flex-row shadow-2xl rounded-[40px] overflow-hidden">
 
         {/* LEFT */}
-        <div className="hidden md:flex md:w-1/2 bg-[#1a1a1a] p-12 flex-col justify-between">
-          <h1 className="text-white text-6xl font-bold">
-            Reset <br /> Password
-          </h1>
+        <div className="hidden md:flex md:w-1/2 bg-[#1a1a1a] p-12 flex-col justify-between relative overflow-hidden">
+          <div className="z-10">
+            <h1 className="text-white text-6xl font-bold">
+              Reset <br /> Password
+            </h1>
+          </div>
+          <div className="absolute bottom-0 right-0 w-3/4 translate-y-20 translate-x-10 opacity-40">
+            <div className="w-full aspect-[9/16] bg-gradient-to-tr from-neutral-800 to-neutral-700 rounded-t-[40px] border-t border-l border-neutral-600 shadow-2xl"></div>
+          </div>
+          <div className="z-10 flex items-center gap-2">
+            <div className="w-8 h-8 rounded-full border border-gray-600 flex items-center justify-center text-[10px] text-gray-400">&copy;</div>
+            <span className="text-gray-500 text-xs">2025-2026 EchOo Inc.</span>
+          </div>
         </div>
 
         {/* RIGHT */}
         <div className="w-full md:w-1/2 p-8 lg:p-16 flex flex-col">
           <div className="flex justify-between items-center mb-16">
-            <img src="/Echoo-transparent.png" className="h-8" />
+            <Link to="/"><img alt="EchOo." src="/Echoo-transparent.png" className="h-8" /></Link>
             <Link to="/sign_in" className="flex items-center gap-1 text-sm">
               Login
               <ArrowUpRightIcon className="size-3" />
@@ -87,6 +97,8 @@ export default function ResetPassword() {
               </button>
             </form>
           </div>
+
+          <AuthFooter />
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { toast } from "react-toastify";
 import { register as registerApi } from "../../api/apiService";
+import AuthFooter from "../../components/ui/AuthFooter";
 
 const Register = () => {
   const [formData, setFormData] = useState({ name: "", email: "", password: "", terms: false });
@@ -79,7 +80,7 @@ const Register = () => {
 
         <div className="w-full md:w-1/2 p-8 lg:p-16 flex flex-col relative">
           <div className="flex justify-between items-center mb-10">
-            <img alt="EchOo." src="/Echoo-transparent.png" className="h-8 w-auto" />
+            <Link to="/"><img alt="EchOo." src="/Echoo-transparent.png" className="h-8 w-auto" /></Link>
             <Link to="/sign_in" className="flex items-center gap-1 text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors">
               Sign In
               <div className="bg-gray-100 p-1 rounded-full ml-1">
@@ -176,6 +177,8 @@ const Register = () => {
               </div>
             </form>
           </div>
+
+          <AuthFooter />
         </div>
       </div>
     </div>

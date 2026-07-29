@@ -1,15 +1,24 @@
 import { ArrowUpRightIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { forgotPassword } from "../../api/apiService";
 import { toast } from "react-toastify";
+import Captcha from "../../components/ui/Captcha";
+import AuthFooter from "../../components/ui/AuthFooter";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const captchaRef = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!captchaRef.current.validate()) {
+      toast.error("Please enter the correct captcha code");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -27,8 +36,8 @@ export default function ForgotPassword() {
       <div className="bg-white w-full max-w-5xl flex flex-col md:flex-row shadow-2xl rounded-[40px] overflow-hidden">
 
         {/* LEFT SAME DESIGN */}
-        <div className="hidden md:flex md:w-1/2 bg-[#1a1a1a] p-12 flex-col justify-between relative">
-          <div>
+        <div className="hidden md:flex md:w-1/2 bg-[#1a1a1a] p-12 flex-col justify-between relative overflow-hidden">
+          <div className="z-10">
             <p className="text-gray-400 text-sm mb-20">
               Reset access to your account securely.
             </p>
@@ -36,12 +45,19 @@ export default function ForgotPassword() {
               Forgot <br /> Password?
             </h1>
           </div>
+          <div className="absolute bottom-0 right-0 w-3/4 translate-y-20 translate-x-10 opacity-40">
+            <div className="w-full aspect-[9/16] bg-gradient-to-tr from-neutral-800 to-neutral-700 rounded-t-[40px] border-t border-l border-neutral-600 shadow-2xl"></div>
+          </div>
+          <div className="z-10 flex items-center gap-2">
+            <div className="w-8 h-8 rounded-full border border-gray-600 flex items-center justify-center text-[10px] text-gray-400">&copy;</div>
+            <span className="text-gray-500 text-xs">2025-2026 EchOo Inc.</span>
+          </div>
         </div>
 
         {/* RIGHT FORM */}
         <div className="w-full md:w-1/2 p-8 lg:p-16 flex flex-col">
           <div className="flex justify-between items-center mb-16">
-            <img src="/Echoo-transparent.png" className="h-8" />
+            <Link to="/"><img alt="EchOo." src="/Echoo-transparent.png" className="h-8" /></Link>
             <Link to="/sign_in" className="flex items-center gap-1 text-sm">
               Back
               <div className="bg-gray-100 p-1 rounded-full">
@@ -63,6 +79,8 @@ export default function ForgotPassword() {
                 className="w-full px-6 py-4 bg-white border border-gray-200 rounded-2xl placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all"
               />
 
+              <Captcha ref={captchaRef} />
+
               <button
                 disabled={loading}
                 className="w-full flex items-center justify-center gap-2 py-4 px-4 bg-gradient-to-b from-gray-500 to-gray-800 shadow-[inset_0px_2px_4px_rgba(255,255,255,0.3),_0px_4px_8px_rgba(0,0,0,0.4)] ring-1 ring-gray-600 text-white rounded-full text-base font-semibold hover:from-gray-400 hover:to-gray-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
@@ -71,6 +89,8 @@ export default function ForgotPassword() {
               </button>
             </form>
           </div>
+
+          <AuthFooter />
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { toast } from "react-toastify";
 import { login as loginApi, googleLogin as googleLoginApi } from "../../api/apiService";
+import AuthFooter from "../../components/ui/AuthFooter";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "", rememberMe: false });
@@ -120,7 +121,7 @@ const Login = () => {
         {/* Right form */}
         <div className="w-full md:w-1/2 p-8 lg:p-16 flex flex-col relative">
           <div className="flex justify-between items-center mb-16">
-            <img alt="EchOo." src="/Echoo-transparent.png" className="h-8 w-auto" />
+            <Link to="/"><img alt="EchOo." src="/Echoo-transparent.png" className="h-8 w-auto" /></Link>
             <Link to="/sign_up" className="flex items-center gap-1 text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors">
               Sign Up
               <div className="bg-gray-100 p-1 rounded-full"><ArrowUpRightIcon className="size-3" /></div>
@@ -211,6 +212,8 @@ const Login = () => {
               </div>
             </form>
           </div>
+
+          <AuthFooter />
         </div>
       </div>
     </div>
