@@ -5,9 +5,11 @@ import { toast } from "react-toastify";
 
 import { addToCart, removeFromWishlist } from "../../api/apiService";
 import { useAuth } from "../../contexts/AuthContext";
+import { useCart } from "../../contexts/CartContext";
 
 const WishlistSection = ({ user, onRefresh }) => {
   const { login } = useAuth();
+  const { fetchCart } = useCart();
   const [wishlistItems, setWishlistItems] = useState(user?.wishlist || []);
   const [loadingId, setLoadingId] = useState(null);
 
@@ -59,6 +61,7 @@ const WishlistSection = ({ user, onRefresh }) => {
       }
 
       await addToCart({ product_id: product.id, quantity: 1 });
+      fetchCart();
       toast.success("Added to cart!");
     } catch (error) {
       console.error(error);
