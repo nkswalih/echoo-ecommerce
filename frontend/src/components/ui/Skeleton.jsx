@@ -100,3 +100,109 @@ export const CategoryGridSkeleton = ({ count = 8 }) => (
     ))}
   </div>
 );
+
+const CartItemRowSkeleton = () => (
+  <div className="bg-white/40 backdrop-blur-xl border border-white/60 rounded-3xl p-4 sm:p-5 flex gap-4 shadow-[0_4px_24px_rgba(0,0,0,0.04)]">
+    <ImageBlock className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl shrink-0" />
+    <div className="flex-1 min-w-0">
+      <div className="flex justify-between items-start gap-2">
+        <div className="min-w-0 flex-1 space-y-2">
+          <TextLine className="w-3/4 h-4" />
+          <TextLine className="w-1/3 h-3" />
+          <TextLine className="w-1/4 h-5 mt-2" />
+        </div>
+        <div className="w-8 h-8 rounded-full bg-gray-200/70 shrink-0" />
+      </div>
+      <div className="flex items-center gap-2 mt-3">
+        <div className="w-8 h-8 rounded-full bg-gray-200/70" />
+        <div className="w-6 h-4 bg-gray-200/70 rounded" />
+        <div className="w-8 h-8 rounded-full bg-gray-200/70" />
+        <TextLine className="ml-auto w-16 h-4" />
+      </div>
+    </div>
+  </div>
+);
+
+export const CartPageSkeleton = () => (
+  <div className="min-h-screen bg-gradient-to-br from-[#d9e8f5] via-[#e2ebf4] to-[#f4f7fa] pt-20 pb-16">
+    <div className="max-w-[1200px] mx-auto px-4 sm:px-6 pt-6">
+      <div className="flex items-end justify-between mb-8">
+        <div>
+          <TextLine className="w-24 h-3 mb-1" />
+          <TextLine className="w-56 h-10 mb-1" />
+          <TextLine className="w-20 h-4" />
+        </div>
+        <TextLine className="w-28 h-10 rounded-full" />
+      </div>
+      <div className="flex flex-col lg:flex-row gap-8">
+        <div className="lg:w-2/3 space-y-4">
+          <CartItemRowSkeleton />
+          <CartItemRowSkeleton />
+          <CartItemRowSkeleton />
+        </div>
+        <div className="lg:w-1/3">
+          <div className="bg-white/40 backdrop-blur-xl border border-white/60 rounded-3xl p-6 shadow-[0_4px_24px_rgba(0,0,0,0.04)] sticky top-24">
+            <TextLine className="w-1/2 h-5 mb-5" />
+            <div className="space-y-3">
+              <div className="flex justify-between"><TextLine className="w-1/3 h-4" /><TextLine className="w-1/4 h-4" /></div>
+              <div className="flex justify-between"><TextLine className="w-1/4 h-4" /><TextLine className="w-1/4 h-4" /></div>
+              <div className="h-px bg-white/80 my-2" />
+              <div className="flex justify-between"><TextLine className="w-1/4 h-5" /><TextLine className="w-1/4 h-5" /></div>
+            </div>
+            <TextLine className="w-full h-14 rounded-full mt-6" />
+            <TextLine className="w-1/2 h-4 mx-auto mt-4" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+export const ProfileSkeleton = () => (
+  <div className="min-h-screen bg-gradient-to-br from-[#d9e8f5] via-[#e2ebf4] to-[#f4f7fa] pt-20 pb-16">
+    <div className="max-w-[1200px] mx-auto px-4 sm:px-6 pt-6 pb-8">
+      <div className="flex items-end justify-between">
+        <div>
+          <TextLine className="w-24 h-3 mb-1" />
+          <TextLine className="w-48 h-10 mb-1" />
+          <TextLine className="w-40 h-4" />
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-10 h-10 rounded-full bg-gray-200/70" />
+          <div className="w-10 h-10 rounded-full bg-gray-200/70" />
+        </div>
+      </div>
+    </div>
+    <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
+      <div className="flex flex-col lg:flex-row gap-6">
+        <div className="lg:w-64 shrink-0">
+          <div className="bg-white/40 backdrop-blur-xl border border-white/60 rounded-3xl p-6 shadow-[0_4px_24px_rgba(0,0,0,0.04)]">
+            <div className="flex flex-col items-center mb-6">
+              <div className="w-20 h-20 rounded-full bg-gray-200/70 mb-3" />
+              <TextLine className="w-28 h-4 mb-1" />
+              <TextLine className="w-36 h-3" />
+            </div>
+            <div className="space-y-2">
+              <TextLine className="w-full h-10 rounded-xl" />
+              <TextLine className="w-full h-10 rounded-xl" />
+              <TextLine className="w-full h-10 rounded-xl" />
+              <TextLine className="w-full h-10 rounded-xl" />
+            </div>
+          </div>
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="bg-white/40 backdrop-blur-xl border border-white/60 rounded-3xl p-6 shadow-[0_4px_24px_rgba(0,0,0,0.04)]">
+            <TextLine className="w-32 h-6 mb-6" />
+            <div className="space-y-4">
+              <div><TextLine className="w-20 h-3 mb-1" /><TextLine className="w-48 h-4" /></div>
+              <div><TextLine className="w-16 h-3 mb-1" /><TextLine className="w-36 h-4" /></div>
+              <div><TextLine className="w-24 h-3 mb-1" /><TextLine className="w-44 h-4" /></div>
+              <div><TextLine className="w-28 h-3 mb-1" /><TextLine className="w-32 h-4" /></div>
+              <div><TextLine className="w-16 h-3 mb-1" /><TextLine className="w-40 h-4" /></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
