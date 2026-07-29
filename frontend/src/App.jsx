@@ -3,13 +3,15 @@ import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import AppRouter from "./app/router";
+import ScrollToTop from "./components/ScrollToTop";
 import "./index.css";
 import "./styles/toast.css";
 
 function App() {
   return (
     <BrowserRouter>
-      <div className="bg-white">
+        <ScrollToTop />
+        <div className="bg-white">
         <AppRouter />
         <ToastContainer
           position="top-right"
