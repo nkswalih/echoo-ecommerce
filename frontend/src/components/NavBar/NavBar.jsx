@@ -13,6 +13,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useCart } from "../../contexts/CartContext.jsx";
 import MobileOverlay from "./MobileOverlay";
 import useScrollDirection from "../../hooks/useScrollDirection";
+import useMediaQuery from "../../hooks/useMediaQuery";
 
 const NavItem = ({ to, label }) => (
   <NavLink
@@ -34,8 +35,11 @@ export default function Navbar() {
   const isScrolled = useScrollDirection();
   const { isAuthenticated } = useAuth();
   const { cartCount } = useCart();
+  const isLarge = useMediaQuery('(min-width: 1024px)');
 
   const navState = mobileMenuOpen ? "overlay" : isScrolled ? "capsule" : "default";
+
+  const marginVal = isLarge ? 176 : 16;
 
   const navVariants = {
     default: {
@@ -45,14 +49,14 @@ export default function Navbar() {
       borderRadius: "0px",
     },
     capsule: {
-      marginLeft: 16,
-      marginRight: 16,
+      marginLeft: marginVal,
+      marginRight: marginVal,
       marginTop: 16,
       borderRadius: "9999px",
     },
     overlay: {
-      marginLeft: 16,
-      marginRight: 16,
+      marginLeft: marginVal,
+      marginRight: marginVal,
       marginTop: 16,
       borderRadius: "9999px",
     },
