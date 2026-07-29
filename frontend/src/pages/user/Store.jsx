@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SimpleFooter from '../../components/SimpleFoot';
 import { useDebounce } from '../../hooks/useDebounce';
 import { getCategoryKey } from '../../utils/productCatalog';
+import { CategoryGridSkeleton, TextLine } from '../../components/ui/Skeleton';
 
 const PRODUCTS_PER_PAGE = 12;
 
@@ -248,10 +249,29 @@ const StorePage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#d9e8f5] via-[#e2ebf4] to-[#f4f7fa] flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 rounded-full border-4 border-gray-300 border-t-gray-700 animate-spin"></div>
-          <span className="text-gray-500 font-medium text-sm">Loading Store...</span>
+      <div className="min-h-screen bg-gradient-to-br from-[#d9e8f5] via-[#e2ebf4] to-[#f4f7fa] pt-20 pb-16">
+        <div className="max-w-[1500px] mx-auto px-4 sm:px-6 pt-6 pb-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+              <TextLine className="w-24 h-3 mb-1" />
+              <TextLine className="w-64 h-10 mb-1" />
+              <TextLine className="w-32 h-4" />
+            </div>
+            <div className="flex gap-3">
+              <TextLine className="w-48 h-10 rounded-full" />
+              <TextLine className="w-36 h-10 rounded-full" />
+            </div>
+          </div>
+        </div>
+        <div className="max-w-[1500px] mx-auto px-4 sm:px-6 mb-8">
+          <div className="flex gap-2 overflow-x-auto pb-2">
+            {Array.from({ length: 5 }, (_, i) => (
+              <TextLine key={i} className="w-24 h-9 rounded-full shrink-0" />
+            ))}
+          </div>
+        </div>
+        <div className="max-w-[1500px] mx-auto px-4 sm:px-6">
+          <CategoryGridSkeleton count={8} />
         </div>
       </div>
     );

@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import SimpleFooter from '../../components/SimpleFoot';
 import { WishlistButtonLarge } from '../../components/ui/WishlistButton';
 import { useAuth } from '../../contexts/AuthContext';
+import { ProductDetailSkeleton } from '../../components/ui/Skeleton';
 
 const ProductPage = () => {
   const { slug } = useParams();
@@ -139,13 +140,7 @@ const ProductPage = () => {
     return colorMap[c] || 'bg-gray-400';
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-[#d9e8f5] to-[#e8f1f8] flex items-center justify-center">
-        <div className="text-gray-600 font-medium">Loading product...</div>
-      </div>
-    );
-  }
+  if (loading) return <ProductDetailSkeleton />;
 
   if (!product) {
     return (
