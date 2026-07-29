@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 import ProtectedRoute from "../pages/ProtectedRoute";
+import { PageSkeleton } from "../components/ui/Skeleton";
 
 const Home = lazy(() => import("../pages/user/Home"));
 const Register = lazy(() => import("../pages/user/RegisterForm"));
@@ -29,14 +30,7 @@ const AdminProducts = lazy(() => import("../pages/admin/AdminProducts/AdminProdu
 const AdminOrders = lazy(() => import("../pages/admin/AdminOrders/AdminOrder"));
 const UserLayout = lazy(() => import("../pages/user/UserLayout"));
 
-const RouteLoader = () => (
-  <div className="flex items-center justify-center h-screen bg-white">
-    <div className="flex items-center gap-3">
-      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-      <span className="text-gray-700">Loading page...</span>
-    </div>
-  </div>
-);
+const RouteLoader = () => <PageSkeleton />;
 
 const AppRouter = () => {
   return (

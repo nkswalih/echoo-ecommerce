@@ -80,9 +80,20 @@ export default {
           "50%": { transform: "scale(1.2)", opacity: "0.5" },
           "100%": { transform: "scale(1)", opacity: "0.9" },
         },
+        shimmer: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(100%)" },
+        },
+        progress: {
+          "0%": { width: "20%" },
+          "50%": { width: "60%" },
+          "100%": { width: "85%" },
+        },
       },
       animation: {
         ripple: "ripple 4s ease infinite",
+        shimmer: "shimmer 1.5s ease-in-out infinite",
+        progress: "progress 2s ease-in-out infinite",
       },
     },
   },
