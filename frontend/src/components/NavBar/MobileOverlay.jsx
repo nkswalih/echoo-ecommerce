@@ -69,12 +69,6 @@ export default function MobileOverlay({ open, onClose }) {
     fetchResults();
   }, [debouncedQuery]);
 
-  useEffect(() => {
-    if (open && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [open]);
-
   const handleProductClick = (slug) => {
     setSearchQuery("");
     setSearchResults([]);

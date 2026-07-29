@@ -87,7 +87,7 @@ const SearchDropdown = () => {
             leaveFrom="opacity-100 translate-y-0"
             leaveTo="opacity-0 translate-y-1"
           >
-            <Popover.Panel className="fixed top-16 left-1/2 -translate-x-1/2 w-[calc(100vw-2rem)] max-w-[18rem] sm:max-w-[24rem] lg:left-auto lg:translate-x-0 lg:right-8 lg:w-96 bg-white rounded-xl shadow-xl border border-gray-200 z-50 overflow-hidden">
+            <Popover.Panel className="fixed top-16 left-1/2 -translate-x-1/2 w-[calc(100vw-2rem)] max-w-[22rem] sm:max-w-[28rem] lg:left-auto lg:translate-x-0 lg:right-8 lg:w-[32rem] bg-white/90 backdrop-blur-md rounded-xl shadow-xl border border-white/20 z-50 overflow-hidden">
               <div className="font-dm-sans">
                 <div className="p-4 border-b border-gray-100 flex items-center gap-3">
                   <MagnifyingGlassIcon className="w-5 h-5 text-gray-400" />
