@@ -11,6 +11,7 @@ import OverviewSection from "../../components/ProfileSection/OverviewSection";
 import ProfileSidebar from "../../components/ProfileSection/ProfileSidebar";
 import WishlistSection from "../../components/ProfileSection/WishlistSection";
 import SimpleFooter from "../../components/SimpleFoot";
+import { ProfileSkeleton } from "../../components/ui/Skeleton";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -83,16 +84,7 @@ const Profile = () => {
     navigate("/sign_in");
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-[#d9e8f5] via-[#e2ebf4] to-[#f4f7fa] flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 rounded-full border-4 border-gray-300 border-t-gray-700 animate-spin"></div>
-          <p className="text-gray-500 text-sm font-medium">Loading your profile...</p>
-        </div>
-      </div>
-    );
-  }
+  if (loading) return <ProfileSkeleton />;
 
   if (!currentUser) {
     return (

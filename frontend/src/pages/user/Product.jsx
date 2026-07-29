@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import SimpleFooter from '../../components/SimpleFoot';
 import { WishlistButtonLarge } from '../../components/ui/WishlistButton';
 import { useAuth } from '../../contexts/AuthContext';
+import { useCart } from '../../contexts/CartContext';
 import { ProductDetailSkeleton } from '../../components/ui/Skeleton';
 
 const ProductPage = () => {
@@ -17,6 +18,7 @@ const ProductPage = () => {
   const [quantity, setQuantity] = useState(1);
   const [addingToCart, setAddingToCart] = useState(false);
   const { user } = useAuth();
+  const { fetchCart } = useCart();
 
   const [selectedOptions, setSelectedOptions] = useState({
     storage: '',
@@ -92,7 +94,9 @@ const ProductPage = () => {
         quantity,
       });
 
+      fetchCart();
       toast.success(`${quantity} ${product.name} added to cart!`);
+      navigate('/cart');
     } catch (error) {
       console.error('Cart error:', error);
       toast.error(error.response?.data?.error || 'Failed to add item to cart. Please try again.');

@@ -4,6 +4,8 @@ import { getCart, updateCartItem, removeCartItem, clearCart as clearCartApi } fr
 import { motion, AnimatePresence } from 'framer-motion';
 import SimpleFooter from '../../components/SimpleFoot';
 import { useAuth } from '../../contexts/AuthContext';
+import { useCart } from '../../contexts/CartContext';
+import { CartPageSkeleton } from '../../components/ui/Skeleton';
 
 const fmt = (p) => new Intl.NumberFormat('en-IN', {
   style: 'currency', currency: 'INR', maximumFractionDigits: 0
@@ -13,6 +15,7 @@ const CartPage = () => {
   const [cartItems, setCartItems]   = useState([]);
   const [loading, setLoading]       = useState(true);
   const { user: currentUser } = useAuth();
+  const { fetchCart: refreshCartCount } = useCart();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,7 +44,8 @@ const CartPage = () => {
     ));
 
     try {
-      await updateCartItem(itemId, { quantity: newQty }); // PATCH /api/cart/{id}/
+      await updateCartItem(itemId, { quantity: newQty });
+      refreshCartCount();
     } catch {
       fetchCart(); // revert on failure
     }
@@ -50,7 +54,8 @@ const CartPage = () => {
   const removeItem = async (itemId) => {
     setCartItems(prev => prev.filter(i => i.id !== itemId)); // optimistic
     try {
-      await removeCartItem(itemId); // DELETE /api/cart/{id}/
+      await removeCartItem(itemId);
+      refreshCartCount();
     } catch {
       fetchCart();
     }
@@ -59,7 +64,8 @@ const CartPage = () => {
   const handleClearCart = async () => {
     setCartItems([]); // optimistic
     try {
-      await clearCartApi(); // DELETE /api/cart/clear/
+      await clearCartApi();
+      refreshCartCount();
     } catch {
       fetchCart();
     }
@@ -69,14 +75,7 @@ const CartPage = () => {
   const shipping  = subtotal > 50000 ? 0 : 99;
   const total     = subtotal + shipping;
 
-  if (loading) return (
-    <div className="min-h-screen bg-gradient-to-br from-[#d9e8f5] via-[#e2ebf4] to-[#f4f7fa] flex items-center justify-center">
-      <div className="flex flex-col items-center gap-3">
-        <div className="w-10 h-10 rounded-full border-4 border-gray-300 border-t-gray-700 animate-spin"></div>
-        <p className="text-gray-500 text-sm font-medium">Loading your cart...</p>
-      </div>
-    </div>
-  );
+  if (loading) return <CartPageSkeleton />;
 
   if (!currentUser) return (
     <div className="min-h-screen bg-gradient-to-br from-[#d9e8f5] via-[#e2ebf4] to-[#f4f7fa] flex flex-col items-center justify-center gap-4 p-6">
@@ -87,15 +86,96 @@ const CartPage = () => {
     </div>
   );
 
-  if (cartItems.length === 0) return (
-    <div className="min-h-screen bg-gradient-to-br from-[#d9e8f5] via-[#e2ebf4] to-[#f4f7fa] flex flex-col items-center justify-center gap-4 p-6">
-      <h2 className="text-2xl font-semibold text-gray-900">Your Bag is Empty</h2>
-      <p className="text-gray-500 text-sm">Hey {currentUser?.name?.split(' ')[0]}! Nothing here yet.</p>
-      <Link to="/store" className="px-8 py-3 rounded-full bg-gradient-to-b from-gray-500 to-gray-800 text-white font-semibold">
-        Continue Shopping
-      </Link>
-    </div>
-  );
+  if (cartItems.length === 0) {
+    const categories = [
+      { name: 'Store', path: '/store', emoji: '🏪', desc: 'Browse all products' },
+      { name: 'Apple', path: '/apple', emoji: '🍎', desc: 'Latest from Apple' },
+      { name: 'Laptops', path: '/laptop', emoji: '💻', desc: 'Power & performance' },
+      { name: 'Accessories', path: '/accessories', emoji: '🎧', desc: 'Essential extras' },
+    ];
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[#d9e8f5] via-[#e2ebf4] to-[#f4f7fa] pt-20 pb-16 flex flex-col">
+        <div className="flex-1 flex flex-col items-center justify-center px-4">
+          <motion.div
+            initial={{ scale: 0, rotate: -10 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ type: 'spring', stiffness: 160, damping: 14, delay: 0.1 }}
+            className="mb-6"
+          >
+            <svg className="w-28 h-28 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}>
+              <motion.path
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                strokeLinecap="round" strokeLinejoin="round"
+                d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+              />
+            </svg>
+          </motion.div>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="text-3xl font-semibold text-gray-900 mb-2"
+          >
+            Your Bag is Empty
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="text-gray-500 text-sm mb-8"
+          >
+            Hey {currentUser?.name?.split(' ')[0]}! Ready to find something great?
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10 w-full max-w-lg"
+          >
+            {categories.map((cat, i) => (
+              <motion.div
+                key={cat.name}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.7 + i * 0.08 }}
+                whileHover={{ y: -3, scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                <Link
+                  to={cat.path}
+                  className="flex flex-col items-center gap-2 p-4 rounded-2xl bg-white/40 backdrop-blur-xl border border-white/60 shadow-[0_4px_24px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.10)] transition-all group"
+                >
+                  <span className="text-2xl">{cat.emoji}</span>
+                  <span className="text-sm font-semibold text-gray-900">{cat.name}</span>
+                  <span className="text-[10px] text-gray-400 text-center leading-tight">{cat.desc}</span>
+                </Link>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1 }}
+          >
+            <Link
+              to="/store"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-b from-gray-500 to-gray-800 shadow-[inset_0px_2px_4px_rgba(255,255,255,0.3),_0px_4px_8px_rgba(0,0,0,0.4)] ring-1 ring-gray-600 text-white font-semibold hover:from-gray-400 hover:to-gray-700 hover:scale-105 active:scale-95 transition-all"
+            >
+              Continue Shopping
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+            </Link>
+          </motion.div>
+        </div>
+
+        <div className="mt-16"><SimpleFooter /></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#d9e8f5] via-[#e2ebf4] to-[#f4f7fa] pt-20 pb-16">
