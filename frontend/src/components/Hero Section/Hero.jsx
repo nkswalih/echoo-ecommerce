@@ -43,7 +43,7 @@ const MainHero = () => {
       <section className="relative pt-32 md:pt-48 pb-16 px-4 max-w-7xl mx-auto flex flex-col items-center justify-center overflow-hidden min-h-[90vh]">
         
         {/* Giant Background Text utilizing modern Anton font */}
-        <div className="absolute top-12 md:top-36 left-0 right-0 z-0 flex justify-center w-full overflow-hidden pointer-events-none uppercase">
+        <div className="absolute top-[38vh] -translate-y-1/2 md:top-36 md:translate-y-0 left-0 right-0 z-0 flex justify-center w-full overflow-hidden pointer-events-none uppercase">
             <h1 className="text-[22vw] md:text-[13vw] font-normal tracking-normal text-[#0f172a] leading-none select-none text-center" 
                 style={{ fontFamily: '"Anton", sans-serif', transform: 'scaleY(1.15)' }}>
                 AESTHETIC<br className="md:hidden" /> UNBOUND
