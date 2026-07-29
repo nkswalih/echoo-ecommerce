@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import { HeartIcon, ShoppingBagIcon } from "@heroicons/react/24/outline";
 import { toast } from "react-toastify";
 
+import { useNavigate } from "react-router-dom";
 import { addToCart } from "../../api/apiService";
 import { useAuth } from "../../contexts/AuthContext";
+import { useCart } from "../../contexts/CartContext";
 
 const ProductActions = ({ product, selectedOptions, quantity, onQuantityChange }) => {
+  const navigate = useNavigate();
   const [addingToCart, setAddingToCart] = useState(false);
   const { user } = useAuth();
+  const { fetchCart } = useCart();
 
   const handleAddToBag = async () => {
     if (addingToCart || product.stock === 0) return;
@@ -26,7 +30,14 @@ const ProductActions = ({ product, selectedOptions, quantity, onQuantityChange }
         quantity,
       });
 
+      fetchCart();
       toast.success(`${quantity} ${product.name} added to cart!`, {
+        position: "top-right",
+        autoClose: 3000,
+        className: "rounded-xl",
+      });
+      navigate('/cart');
+
         position: "top-right",
         autoClose: 3000,
         className: "rounded-xl",
