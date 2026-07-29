@@ -254,8 +254,6 @@ const MainHero = () => {
 
     {/* Load Anton font from Google Fonts specifically for the hero title */}
     <style dangerouslySetInnerHTML={{__html: `
-        @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
-        
         @keyframes float {
             0% {
                 transform: translateY(0px);
