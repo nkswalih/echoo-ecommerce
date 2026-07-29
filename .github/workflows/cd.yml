@@ -90,7 +90,7 @@ jobs:
             fi
 
             # Start containers - USE PROD FILE
-            docker-compose -f docker-compose.prod.yml up -d
+            docker-compose -f docker-compose.prod.yml up -d --build
 
             # Wait for container to start
             echo "Waiting for application to start..."
