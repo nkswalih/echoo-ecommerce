@@ -54,6 +54,7 @@ def set_auth_cookies(response, tokens, remember=False):
         max_age=refresh_max_age,
         **kwargs,
     )
+    response.cookies["refresh_token"]["partitioned"] = True
 
     response.set_cookie(
         "access_token",
@@ -61,6 +62,7 @@ def set_auth_cookies(response, tokens, remember=False):
         max_age=ACCESS_TOKEN_MAX_AGE,
         **kwargs,
     )
+    response.cookies["access_token"]["partitioned"] = True
 
     response.set_cookie(
         "remember_me",
@@ -71,17 +73,25 @@ def set_auth_cookies(response, tokens, remember=False):
         path="/",
         max_age=REFRESH_TOKEN_REMEMBER_MAX_AGE if remember else 0,
     )
+    response.cookies["remember_me"]["partitioned"] = True
 
 
 def clear_access_token(response):
-    response.delete_cookie("access_token", path="/", domain=None)
-    response.delete_cookie("remember_me", path="/", domain=None)
+    kwargs = dict(path="/", secure=True, samesite="None", max_age=0, expires="Thu, 01 Jan 1970 00:00:00 GMT")
+    response.set_cookie("access_token", **kwargs)
+    response.cookies["access_token"]["partitioned"] = True
+    response.set_cookie("remember_me", httponly=False, **kwargs)
+    response.cookies["remember_me"]["partitioned"] = True
 
 
 def clear_auth_cookies(response):
-    response.delete_cookie("access_token", path="/", domain=None)
-    response.delete_cookie("refresh_token", path="/", domain=None)
-    response.delete_cookie("remember_me", path="/", domain=None)
+    kwargs = dict(path="/", secure=True, samesite="None", max_age=0, expires="Thu, 01 Jan 1970 00:00:00 GMT")
+    response.set_cookie("access_token", **kwargs)
+    response.cookies["access_token"]["partitioned"] = True
+    response.set_cookie("refresh_token", **kwargs)
+    response.cookies["refresh_token"]["partitioned"] = True
+    response.set_cookie("remember_me", httponly=False, **kwargs)
+    response.cookies["remember_me"]["partitioned"] = True
 
 
 def parse_positive_int(value, default):
